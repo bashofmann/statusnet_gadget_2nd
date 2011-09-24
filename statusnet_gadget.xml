@@ -7,6 +7,15 @@
         <Require feature="opensocial-templates">
         </Require>
         <Require feature="osapi" />
+        <Require feature="dynamic-height" />
+        <Require feature="oauthpopup" />
+        <OAuth>
+          <Service name="statusnet">
+            <Request url="http://dev.status.net:8080/index.php/api/oauth/request_token" param_location="uri-query" />
+            <Access url="http://dev.status.net:8080/index.php/api/oauth/access_token" param_location="uri-query" />
+            <Authorization url="http://dev.status.net:8080/index.php/api/oauth/authorize" param_location="uri-query" />
+          </Service>
+        </OAuth>
     </ModulePrefs>
     <Content type="html" view="canvas,profile" href="proxiedContent.php" authz="signed">
         <script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
