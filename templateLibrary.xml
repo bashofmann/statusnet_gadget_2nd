@@ -4,6 +4,7 @@
 
     <Template tag="statusnet:feedItem">
         <span id="status_text_${item.id}">${item.text}</span> <i>(${item.created_at}, ${item.user.name})</i>
-        <a if="${showMessageLink}" class="link_send_message" href="javascript:;" id="${item.id}">requestSendMessage</a> 
+        <a if="${showMessageLink}" class="link_send_message" href="javascript:;" id="m_${item.id}">requestSendMessage</a> 
+        <a if="${showMessageLink}" class="link_send_activity" href="javascript:;" id="a_${item.id}">sendActivity</a> 
     </Template>
 </Templates>

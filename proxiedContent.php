@@ -29,7 +29,7 @@ if (! $return) {
 $data = json_decode(file_get_contents('php://input'), true);
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" />
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" />
+
 <script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
     <os:PeopleRequest key="Viewer" userId="@viewer" fields="name" groupId="@self"/>
 </script>
@@ -96,8 +96,20 @@ $data = json_decode(file_get_contents('php://input'), true);
             var params = [];
             params[opensocial.Message.Field.TYPE] = opensocial.Message.Type.PRIVATE_MESSAGE;
             params[opensocial.Message.Field.TITLE] = 'A message from the status.net Gadget';
-            var message = opensocial.newMessage('What do you think about this update: ' + $('#status_text_' + $(this).attr('id')).text(), params);
+            var message = opensocial.newMessage('What do you think about this update: ' + $('#status_text_' + $(this).attr('id').replace('m_', '')).text(), params);
             opensocial.requestSendMessage(null, message);
+        });
+        $('a.link_send_activity').unbind('click').click(function() {
+            var params = [];
+            params[opensocial.Activity.Field.TITLE] = 'A message from the status.net Gadget';
+            params[opensocial.Activity.Field.BODY] = 'What do you think about this update: ' + $('#status_text_' + $(this).attr('id').replace('a_', '')).text();
+            var activity = opensocial.newActivity(params);
+            osapi.activities.create({
+                userId: '@viewer',
+                activity: activity.toJsonObject()
+            }).execute(function() {
+                alert('Activity sent');
+            });
         });
     }
     gadgets.util.registerOnLoadHandler(function() {
