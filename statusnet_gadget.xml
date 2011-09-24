@@ -13,11 +13,8 @@
             <script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
                 <os:PeopleRequest key="Viewer" userId="@viewer" fields="name" groupId="@self"/>
             </script>
-            Hello <span id="name"></span>
-            <script type="text/javascript">
-                var viewer =  opensocial.data.DataContext.getDataSet('Viewer');
-                document.getElementById('name').innerHTML = viewer.name.givenName
-                    + ' <b>' + viewer.name.familyName + '</b>';
+            <script type="text/os-template" xmlns:os="http://ns.opensocial.org/2008/markup" require="Viewer">
+                Hello ${Viewer.name.givenName} <b>${Viewer.name.familyName}</b>
             </script>
        ]]>
     </Content>
