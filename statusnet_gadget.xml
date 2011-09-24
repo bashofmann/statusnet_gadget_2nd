@@ -10,15 +10,14 @@
     </ModulePrefs>
     <Content type="html" view="canvas,profile">
         <![CDATA[
+            <script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
+                <os:PeopleRequest key="Viewer" userId="@viewer" fields="name" groupId="@self"/>
+            </script>
             Hello <span id="name"></span>
             <script type="text/javascript">
-                var req = opensocial.newDataRequest();
-                req.add(req.newFetchPersonRequest(opensocial.IdSpec.PersonId.VIEWER), 'viewer');
-                req.send(function(data) {
-                    var viewerName = data.get('viewer').getData().getField('name');
-                    document.getElementById('name').innerHTML = viewerName.getField('givenName')
-                        + " <b>" + viewerName.getField('familyName') + "</b>";
-                });
+                var viewer =  opensocial.data.DataContext.getDataSet('Viewer');
+                document.getElementById('name').innerHTML = viewer.name.givenName
+                    + ' <b>' + viewer.name.familyName + '</b>';
             </script>
        ]]>
     </Content>
