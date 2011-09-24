@@ -10,7 +10,16 @@
     </ModulePrefs>
     <Content type="html" view="canvas,profile">
         <![CDATA[
-            Hello World
+            Hello <span id="name"></span>
+            <script type="text/javascript">
+                var req = opensocial.newDataRequest();
+                req.add(req.newFetchPersonRequest(opensocial.IdSpec.PersonId.VIEWER), 'viewer');
+                req.send(function(data) {
+                    var viewerName = data.get('viewer').getData().getField('name');
+                    document.getElementById('name').innerHTML = viewerName.getField('givenName')
+                        + " <b>" + viewerName.getField('familyName') + "</b>";
+                });
+            </script>
        ]]>
     </Content>
 </Module>
