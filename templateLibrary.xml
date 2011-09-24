@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Templates xmlns:statusnet="http://dev.status.net" xmlns:os="http://ns.opensocial.org/2008/markup">
+    <Namespace prefix="statusnet" url="http://dev.status.net" />
+
+    <Template tag="statusnet:feedItem">
+        <span id="status_text_${item.id}">${item.text}</span> <i>(${item.created_at}, ${item.user.name})</i>
+        <a if="${showMessageLink}" class="link_send_message" href="javascript:;" id="${item.id}">requestSendMessage</a> 
+    </Template>
+</Templates>

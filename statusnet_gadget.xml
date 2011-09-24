@@ -5,6 +5,7 @@
         <Require feature="views" />
         <Require feature="opensocial-data" />
         <Require feature="opensocial-templates">
+            <Param name="requireLibrary">templateLibrary.xml</Param>
         </Require>
         <Require feature="osapi" />
         <Require feature="dynamic-height" />

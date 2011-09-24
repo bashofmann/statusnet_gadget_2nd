@@ -50,12 +50,12 @@ $data = json_decode(file_get_contents('php://input'), true);
 <?php endif; ?>
 
 
-<script type="text/os-template" xmlns:os="http://ns.opensocial.org/2008/markup" require="feed" autoUpdate="true">
+<script type="text/os-template" xmlns:os="http://ns.opensocial.org/2008/markup" xmlns:statusnet="http://dev.status.net"
+        require="feed" autoUpdate="true">
     <h3>Your status.net feed:</h3>
     <ul>
         <li repeat="${feed}">
-            <span id="status_text_${Cur.id}">${Cur.text}</span> (${Cur.created_at}, ${Cur.user.name})
-            <a class="link_send_message" href="javascript:;" id="${Cur.id}">requestSendMessage</a>
+            <statusnet:feedItem showMessageLink="true" item="${Cur}"/>
         </li>
     </ul>
 </script>
