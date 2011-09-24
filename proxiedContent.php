@@ -103,6 +103,12 @@ $data = json_decode(file_get_contents('php://input'), true);
             var params = [];
             params[opensocial.Activity.Field.TITLE] = 'A message from the status.net Gadget';
             params[opensocial.Activity.Field.BODY] = 'What do you think about this update: ' + $('#status_text_' + $(this).attr('id').replace('a_', '')).text();
+            params[opensocial.Activity.Field.EMBEDS] = [
+                {
+                    gadget: "http://localhost:8080/statusnet_gadget_2nd/statusnet_gadget.xml",
+                    context: $(this).attr('id').replace('a_', '')
+                }
+            ];
             var activity = opensocial.newActivity(params);
             osapi.activities.create({
                 userId: '@viewer',

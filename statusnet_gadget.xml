@@ -10,6 +10,7 @@
         <Require feature="osapi" />
         <Require feature="dynamic-height" />
         <Require feature="oauthpopup" />
+        <Require feature="embedded-experiences" />
         <OAuth>
           <Service name="statusnet">
             <Request url="http://dev.status.net:8080/index.php/api/oauth/request_token" param_location="uri-query" />
@@ -22,5 +23,7 @@
         <script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
             <os:PeopleRequest key="Viewer" userId="@viewer" fields="name" groupId="@friends"/>
         </script>
+    </Content>
+    <Content type="html" view="embedded" href="embed.html">
     </Content>
 </Module>

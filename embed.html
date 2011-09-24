@@ -1,0 +1,27 @@
+<script type="text/os-template" xmlns:statusnet="http://statusnet.net.xyz" xmlns:os="http://ns.opensocial.org/2008/markup" require="feedItem" autoUpdate="true">
+    <p>
+        <statusnet:feedItem showPostLink="false" item="${feedItem}"/>
+    </p>
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" />
+<a href="javascript:;" id="app_link">go to app</a>
+<script type="text/javascript">
+    function loadPost(postId) {
+        osapi.http.get({
+            'href' : 'http://dev.status.net:8080/index.php/api/statuses/show/' + encodeURIComponent(postId) + '.json',
+            'format' : 'json',
+            'authtz' : 'signed'
+        }).execute(function(response) {
+            opensocial.data.DataContext.putDataSet('feedItem', response.content);
+        });
+        
+    }
+    gadgets.util.registerOnLoadHandler(function() {
+        opensocial.data.getDataContext().registerListener('org.opensocial.ee.context', function(key){
+            loadPost(opensocial.data.getDataContext().getDataSet(key));
+        });
+        $('#game_link').click(function() {
+            gadgets.view.requestNavigateTo('canvas');
+        }); 
+    });
+</script>
