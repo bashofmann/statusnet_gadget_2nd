@@ -28,6 +28,8 @@ if (! $return) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" />
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" />
 <script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
     <os:PeopleRequest key="Viewer" userId="@viewer" fields="name" groupId="@self"/>
 </script>
@@ -52,7 +54,8 @@ $data = json_decode(file_get_contents('php://input'), true);
     <h3>Your status.net feed:</h3>
     <ul>
         <li repeat="${feed}">
-            ${Cur.text} (${Cur.created_at}, ${Cur.user.name})
+            <span id="status_text_${Cur.id}">${Cur.text}</span> (${Cur.created_at}, ${Cur.user.name})
+            <a class="link_send_message" href="javascript:;" id="${Cur.id}">requestSendMessage</a>
         </li>
     </ul>
 </script>
@@ -81,13 +84,22 @@ $data = json_decode(file_get_contents('php://input'), true);
                     console.log(response);
                     opensocial.data.DataContext.putDataSet('feed', response.data);
                     gadgets.window.adjustHeight();
+                    bindLinks();
                 }
             }, params);
         }
 
         fetchData();
     }
-    
+    function bindLinks() {
+        $('a.link_send_message').unbind('click').click(function() {
+            var params = [];
+            params[opensocial.Message.Field.TYPE] = opensocial.Message.Type.PRIVATE_MESSAGE;
+            params[opensocial.Message.Field.TITLE] = 'A message from the status.net Gadget';
+            var message = opensocial.newMessage('What do you think about this update: ' + $('#status_text_' + $(this).attr('id')).text(), params);
+            opensocial.requestSendMessage(null, message);
+        });
+    }
     gadgets.util.registerOnLoadHandler(function() {
         loadFeed();
     });
